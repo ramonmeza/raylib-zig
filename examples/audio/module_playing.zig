@@ -22,7 +22,7 @@ pub fn main() void {
 
     raylib.setConfigFlags(raylib.ConfigFlags{ .msaa_4x_hint = true }); // NOTE: Try to enable MSAA 4X
 
-    raylib.initWindow(screenWidth, screenHeight, "raylib [audio] example - module playing (streaming)");
+    raylib.initWindow(screenWidth, screenHeight, "raylib.zig [audio] example - module playing (streaming)");
     defer raylib.closeWindow(); // Close window and OpenGL context
 
     raylib.initAudioDevice(); // Initialize audio device
