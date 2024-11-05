@@ -192,6 +192,11 @@ pub fn build(b: *std.Build) !void {
             .desc = "Mixed audio processing",
         },
         .{
+            .name = "module_playing",
+            .path = "examples/audio/module_playing.zig",
+            .desc = "Module playing (streaming)",
+        },
+        .{
             .name = "raw_stream",
             .path = "examples/audio/raw_stream.zig",
             .desc = "Plays a sine wave",
