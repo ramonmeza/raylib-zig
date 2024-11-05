@@ -217,6 +217,11 @@ pub fn build(b: *std.Build) !void {
             .desc = "Playing sound multiple times",
         },
         .{
+            .name = "stream_effects",
+            .path = "examples/audio/stream_effects.zig",
+            .desc = "Music stream processing effects",
+        },
+        .{
             .name = "basic_screen_manager",
             .path = "examples/core/basic_screen_manager.zig",
             .desc = "Illustrates simple screen manager based on a state machine",
