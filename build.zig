@@ -212,6 +212,11 @@ pub fn build(b: *std.Build) !void {
             .desc = "Sound loading and playing",
         },
         .{
+            .name = "sound_multi",
+            .path = "examples/audio/sound_multi.zig",
+            .desc = "Playing sound multiple times",
+        },
+        .{
             .name = "basic_screen_manager",
             .path = "examples/core/basic_screen_manager.zig",
             .desc = "Illustrates simple screen manager based on a state machine",
