@@ -48,7 +48,7 @@ pub fn main() void {
         raylib.clearBackground(raylib.Color.ray_white);
         raylib.drawText("MUSIC SHOULD BE PLAYING!", 255, 150, 20, raylib.Color.light_gray);
 
-        //raylib.drawText(raylib.textFormat("EXPONENT = %.2f", .{exponent, }), 215, 180, 20, raylib.Color.light_gray);
+        raylib.drawText(raylib.textFormat("EXPONENT = %.2f", .{exponent}), 215, 180, 20, raylib.Color.light_gray);
 
         raylib.drawRectangle(199, 199, 402, 34, raylib.Color.light_gray);
         for (0..399) |i| {
