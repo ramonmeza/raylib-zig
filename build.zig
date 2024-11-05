@@ -186,136 +186,257 @@ pub fn build(b: *std.Build) !void {
     };
 
     const examples = [_]Program{
+        // [audio]
         .{
-            .name = "mixed_processor",
-            .path = "examples/audio/mixed_processor.zig",
+            .name = "audio_mixed_processor",
+            .path = "examples/audio/audio_mixed_processor.zig",
             .desc = "Mixed audio processing",
         },
         .{
-            .name = "module_playing",
-            .path = "examples/audio/module_playing.zig",
+            .name = "audio_module_playing",
+            .path = "examples/audio/audio_module_playing.zig",
             .desc = "Module playing (streaming)",
         },
         .{
-            .name = "music_stream",
-            .path = "examples/audio/music_stream.zig",
+            .name = "audio_music_stream",
+            .path = "examples/audio/audio_music_stream.zig",
             .desc = "Music playing (streaming)",
         },
         .{
-            .name = "raw_stream",
-            .path = "examples/audio/raw_stream.zig",
+            .name = "audio_raw_stream",
+            .path = "examples/audio/audio_raw_stream.zig",
             .desc = "Plays a sine wave",
         },
         .{
-            .name = "sound_loading",
-            .path = "examples/audio/sound_loading.zig",
+            .name = "audio_sound_loading",
+            .path = "examples/audio/audio_sound_loading.zig",
             .desc = "Sound loading and playing",
         },
         .{
-            .name = "sound_multi",
-            .path = "examples/audio/sound_multi.zig",
+            .name = "audio_sound_multi",
+            .path = "examples/audio/audio_sound_multi.zig",
             .desc = "Playing sound multiple times",
         },
         .{
-            .name = "stream_effects",
-            .path = "examples/audio/stream_effects.zig",
+            .name = "audio_stream_effects",
+            .path = "examples/audio/audio_stream_effects.zig",
             .desc = "Music stream processing effects",
         },
+
+        // [core]
         .{
-            .name = "basic_screen_manager",
-            .path = "examples/core/basic_screen_manager.zig",
-            .desc = "Illustrates simple screen manager based on a state machine",
-        },
-        .{
-            .name = "basic_window",
-            .path = "examples/core/basic_window.zig",
-            .desc = "Creates a basic window with text",
-        },
-        .{
-            .name = "input_keys",
-            .path = "examples/core/input_keys.zig",
-            .desc = "Simple keyboard input",
-        },
-        .{
-            .name = "input_mouse",
-            .path = "examples/core/input_mouse.zig",
-            .desc = "Simple mouse input",
-        },
-        .{
-            .name = "input_mouse_wheel",
-            .path = "examples/core/input_mouse_wheel.zig",
-            .desc = "Mouse wheel input",
-        },
-        .{
-            .name = "input_multitouch",
-            .path = "examples/core/input_multitouch.zig",
-            .desc = "Multitouch input",
-        },
-        .{
-            .name = "2d_camera",
-            .path = "examples/core/2d_camera.zig",
+            .name = "core_2d_camera",
+            .path = "examples/core/core_2d_camera.zig",
             .desc = "Shows the functionality of a 2D camera",
         },
         .{
-            .name = "3d_camera_first_person",
-            .path = "examples/core/3d_camera_first_person.zig",
+            .name = "core_2d_camera_mouse_zoom",
+            .path = "examples/core/core_2d_camera_mouse_zoom.zig",
+            .desc = "Shows mouse zoom demo",
+        },
+        // @todo: core_2d_camera_platformer
+        // @todo: core_2d_camera_split_screen
+        .{
+            .name = "core_3d_camera_first_person",
+            .path = "examples/core/core_3d_camera_first_person.zig",
             .desc = "Simple first person demo",
         },
         .{
-            .name = "3d_camera_free",
-            .path = "examples/core/3d_camera_free.zig",
+            .name = "core_3d_camera_free",
+            .path = "examples/core/core_3d_camera_free.zig",
             .desc = "Shows basic 3d camera initialization",
         },
+        // @todo: core_3d_camera_mode
+        // @todo: core_3d_camera_split_screen
         .{
-            .name = "2d_camera_mouse_zoom",
-            .path = "examples/core/2d_camera_mouse_zoom.zig",
-            .desc = "Shows mouse zoom demo",
-        },
-        .{
-            .name = "3d_picking",
-            .path = "examples/core/3d_picking.zig",
+            .name = "core_3d_picking",
+            .path = "examples/core/core_3d_picking.zig",
             .desc = "Shows picking in 3d mode",
         },
+        // @todo: core_automation_events
         .{
-            .name = "window_flags",
-            .path = "examples/core/window_flags.zig",
+            .name = "core_basic_screen_manager",
+            .path = "examples/core/core_basic_screen_manager.zig",
+            .desc = "Illustrates simple screen manager based on a state machine",
+        },
+        .{
+            .name = "core_basic_window",
+            .path = "examples/core/core_basic_window.zig",
+            .desc = "Creates a basic window with text",
+        },
+        // @todo: core_frame_control
+        // @todo: core_custom_logging
+        // @todo: core_drop_files
+        // @todo: core_input_gamepad
+        // @todo: core_input_gamepad_info
+        // @todo: core_input_gestures
+        .{
+            .name = "core_input_keys",
+            .path = "examples/core/core_input_keys.zig",
+            .desc = "Simple keyboard input",
+        },
+        .{
+            .name = "core_input_mouse",
+            .path = "examples/core/core_input_mouse.zig",
+            .desc = "Simple mouse input",
+        },
+        .{
+            .name = "core_input_mouse_wheel",
+            .path = "examples/core/core_input_mouse_wheel.zig",
+            .desc = "Mouse wheel input",
+        },
+        .{
+            .name = "core_input_multitouch",
+            .path = "examples/core/core_input_multitouch.zig",
+            .desc = "Multitouch input",
+        },
+        // @todo: core_loading_thread
+        // @todo: core_random_sequence
+        // @todo: core_random_values
+        // @todo: core_scissor_test
+        // @todo: core_smooth_pixelperfect
+        // @todo: core_storage_values
+        // @todo: core_vr_simulator
+        .{
+            .name = "core_window_flags",
+            .path = "examples/core/core_window_flags.zig",
             .desc = "Demonstrates various flags used during and after window creation",
         },
+        // @todo: core_window_letterbox
+        // @todo: core_window_should_close
+        // @todo: core_world_screen
+
+        // [models]
+        // @todo: models_animation
+        // @todo: models_billboard
+        // @todo: models_box_collisions
+        // @todo: models_cubicmap
+        // @todo: models_draw_cube_texture
+        // @todo: models_first_person_maze
+        // @todo: models_geometry_shapes
+        // @todo: models_gpu_skinning
+        // @todo: models_heightmap
+        // @todo: models_loading
+        // @todo: models_loading_gltf
+        // @todo: models_loading_m3d
+        // @todo: models_loading_vox
+        // @todo: models_mesh_generation
+        // @todo: models_mesh_picking
+        // @todo: models_orthographic_projection
+        // @todo: models_rlgl_solar_system
+        // @todo: models_skybox
+        // @todo: models_waving_cubes
+        // @todo: models_yaw_pitch_roll
+
+        // [other]
+        // @todo: other_easings_testbed
+        // @todo: other_embedded_files_loading
+        // @todo: other_rlgl_compute_shaders
+        // @todo: other_rlgl_standalone
+
+        // [shaders]
+        // @todo: texture_basic_lighting
+        // @todo: texture_custom_uniform
+        // @todo: texture_deferred_render
+        // @todo: texture_eratosthenes
+        // @todo: texture_fog
+        // @todo: texture_hot_reloading
+        // @todo: texture_hybrid_render
+        // @todo: texture_julia_set
+        // @todo: texture_mesh_instancing
+        // @todo: texture_model_shader
+        // @todo: texture_multi_sample2d
+        // @todo: texture_palette_switch
+        // @todo: texture_postprocessing
+        // @todo: texture_raymarching
+        // @todo: texture_shadowmap
+        // @todo: texture_shape_textures
+        // @todo: texture_simple_mask
+        // @todo: texture_spotlight
+        // @todo: texture_texture_drawing
         .{
             .name = "texture_outline",
             .path = "examples/shaders/texture_outline.zig",
             .desc = "Uses a shader to create an outline around a sprite",
         },
+        // @todo: texture_texture_tiling
+        // @todo: texture_texture_waves
+        // @todo: texture_write_depth
+
+        // [shapes]
+        // @todo: shapes_basic_shapes
+        // @todo: shapes_bouncing_ball
+        // @todo: shapes_collision_area
+        // @todo: shapes_colors_palette
+        // @todo: shapes_draw_circle_sector
+        // @todo: shapes_draw_rectangle_rounded
+        // @todo: shapes_draw_ring
+        // @todo: shapes_easing_ball_anim
+        // @todo: shapes_easing_box_anim
+        // @todo: shapes_easing_rectangle_array
+        // @todo: shapes_following_eyes
+        // @todo: shapes_lines_bezier
         .{
             .name = "logo_raylib",
-            .path = "examples/shapes/logo_raylib.zig",
+            .path = "examples/shapes/shapes_logo_raylib.zig",
             .desc = "Renders the raylib-zig logo",
         },
-        .{
-            .name = "sprite_anim",
-            .path = "examples/textures/sprite_anim.zig",
-            .desc = "Animate a sprite",
-        },
-        .{
-            .name = "textures_background_scrolling",
-            .path = "examples/textures/textures_background_scrolling.zig",
-            .desc = "Background scrolling & parallax demo",
-        },
+        // @todo: shapes_logo_raylib_anim
+        // @todo: shapes_rectangle_advanced
+        // @todo: shapes_rectangle_scaling
+        // @todo: shapes_splines_drawing
+        // @todo: shapes_top-down_lights
+
+        // [text]
+        // @todo: text_codepoints_loading
+        // @todo: text_draw_3d
+        // @todo: text_font_filters
+        // @todo: text_font_loading
+        // @todo: text_font_sdf
+        // @todo: text_font_spritefont
         .{
             .name = "text_format_text",
             .path = "examples/text/text_format_text.zig",
             .desc = "Renders variables as text",
         },
-        // .{
-        //     .name = "models_loading",
-        //     .path = "examples/models/models_loading.zig",
-        //     .desc = "Loads a model and renders it",
-        // },
-        // .{
-        //     .name = "shaders_basic_lighting",
-        //     .path = "examples/shaders/shaders_basic_lighting.zig",
-        //     .desc = "Loads a model and renders it",
-        // },
+        // @todo: text_input_box
+        // @todo: text_raylib_fonts
+        // @todo: text_rectangle_bounds
+        // @todo: text_unicode
+        // @todo: text_writing_anim
+
+        // [textures]
+        .{
+            .name = "textures_background_scrolling",
+            .path = "examples/textures/textures_background_scrolling.zig",
+            .desc = "Background scrolling & parallax demo",
+        },
+        // @todo: textures_blend_modes
+        // @todo: textures_bunnymark
+        // @todo: textures_draw_tiled
+        // @todo: textures_fog_of_war
+        // @todo: textures_gif_player
+        // @todo: textures_image_drawing
+        // @todo: textures_image_generation
+        // @todo: textures_image_loading
+        // @todo: textures_image_processing
+        // @todo: textures_image_text
+        // @todo: textures_logo_raylib
+        // @todo: textures_mouse_painting
+        // @todo: textures_npatch_drawing
+        // @todo: textures_particles_blending
+        // @todo: textures_polygon
+        // @todo: textures_raw_data
+        .{
+            .name = "sprite_anim",
+            .path = "examples/textures/textures_sprite_anim.zig",
+            .desc = "Animate a sprite",
+        },
+        // @todo: textures_sprite_button
+        // @todo: textures_sprite_explosion
+        // @todo: textures_srcrec_dstrec
+        // @todo: textures_textured_curve
+        // @todo: textures_to_image
     };
 
     const raylib = this.getModule(b, target, optimize);
