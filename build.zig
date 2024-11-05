@@ -187,6 +187,11 @@ pub fn build(b: *std.Build) !void {
 
     const examples = [_]Program{
         .{
+            .name = "mixed_processor",
+            .path = "examples/audio/mixed_processor.zig",
+            .desc = "Mixed audio processing",
+        },
+        .{
             .name = "raw_stream",
             .path = "examples/audio/raw_stream.zig",
             .desc = "Plays a sine wave",
