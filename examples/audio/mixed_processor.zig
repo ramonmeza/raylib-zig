@@ -48,7 +48,7 @@ pub fn main() void {
         raylib.clearBackground(raylib.Color.ray_white);
         raylib.drawText("MUSIC SHOULD BE PLAYING!", 255, 150, 20, raylib.Color.light_gray);
 
-        // raylib.drawText(raylib.textFormat("EXPONENT = %.2f", .{exponent, }), 215, 180, 20, raylib.Color.light_gray);
+        //raylib.drawText(raylib.textFormat("EXPONENT = %.2f", .{exponent, }), 215, 180, 20, raylib.Color.light_gray);
 
         raylib.drawRectangle(199, 199, 402, 34, raylib.Color.light_gray);
         for (0..399) |i| {
@@ -63,35 +63,31 @@ pub fn main() void {
     }
 }
 
-fn process_audio(buffer: ?*anyopaque, frames: c_uint) callconv(.C) void {
-    const samples = @as([*]f32, @ptrCast(@alignCast(buffer.?)))[0..frames];
+pub fn process_audio(buffer: ?*anyopaque, frames: c_uint) callconv(.c) void {
+    if (buffer == null) return;
+
+    // Samples are stored as `float` internally
+    const samples = buffer orelse return;
+    const samplesPtr = @as([*]f32, @ptrCast((@alignCast(samples))));
+
     var average: f32 = 0.0;
 
-    // original loop caused out of bounds error
-    // needed to iterate half the frames, since half are left and half are right
-    const half: usize = @as(usize, @intFromFloat(std.math.floor(@as(f32, @floatCast(@as(f32, @floatFromInt(frames)) / 2.0)))));
-    for (0..half) |frame| {
-        const left: *f32 = &samples[frame * 2 + 0];
-        const right: *f32 = &samples[frame * 2 + 1];
+    for (0..frames) |frame| {
+        const left = &samplesPtr[frame * 2];
+        const right = &samplesPtr[frame * 2 + 1];
 
-        var x: f32 = -1.0;
-        if (left.* < 0.0) {
-            x = 1.0;
-        }
-        left.* = std.math.pow(f32, @abs(left.*), exponent) * x;
-
-        x = -1.0;
-        if (right.* < 0.0) {
-            x = 1.0;
-        }
-        right.* = std.math.pow(f32, @abs(right.*), exponent) * x;
+        left.* = std.math.pow(f32, @abs(left.*), exponent) * @as(f32, (if (left.* < 0.0) -1.0 else 1.0));
+        right.* = std.math.pow(f32, @abs(right.*), exponent) * @as(f32, (if (right.* < 0.0) -1.0 else 1.0));
 
         average += @abs(left.*) / @as(f32, @floatFromInt(frames));
         average += @abs(right.*) / @as(f32, @floatFromInt(frames));
     }
 
-    for (0..399) |i| {
-        average_volume[i] = average_volume[i + 1];
+    // Moving history to the left
+    for (0..(average_volume.len - 1)) |i| {
+        if (i < 399) average_volume[i] = average_volume[i + 1];
     }
-    average_volume[399] = average;
+
+    // Adding the last average value
+    if (average_volume.len > 0) average_volume[399] = average;
 }
