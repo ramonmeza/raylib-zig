@@ -2,6 +2,7 @@
 
 const std = @import("std");
 const this = @This();
+
 const rl = @import("raylib");
 
 pub const emcc = @import("emcc.zig");
@@ -161,6 +162,18 @@ const gui = struct {
         const raylib = this.getModule(b, target, optimize);
         return b.addModule("raygui", .{
             .root_source_file = b.path("lib/raygui.zig"),
+            .imports = &.{.{ .name = "raylib-zig", .module = raylib }},
+            .target = target,
+            .optimize = optimize,
+        });
+    }
+};
+
+const rlgl = struct {
+    fn getModule(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.builtin.OptimizeMode) *std.Build.Module {
+        const raylib = this.getModule(b, target, optimize);
+        return b.addModule("rlgl", .{
+            .root_source_file = b.path("lib/rlgl.zig"),
             .imports = &.{.{ .name = "raylib-zig", .module = raylib }},
             .target = target,
             .optimize = optimize,
@@ -328,6 +341,11 @@ pub fn build(b: *std.Build) !void {
         // @todo: models_mesh_picking
         // @todo: models_orthographic_projection
         // @todo: models_rlgl_solar_system
+        .{
+            .name = "models_rlgl_solar_system",
+            .path = "examples/models/models_rlgl_solar_system.zig",
+            .desc = "rlgl module usage with push/pop matrix transformations",
+        },
         // @todo: models_skybox
         // @todo: models_waving_cubes
         // @todo: models_yaw_pitch_roll
@@ -445,6 +463,7 @@ pub fn build(b: *std.Build) !void {
 
     const raylib = this.getModule(b, target, optimize);
     const raygui = this.gui.getModule(b, target, optimize);
+    const rlgl_module = this.rlgl.getModule(b, target, optimize);
 
     const raylib_test = b.addTest(.{
         .root_source_file = b.path("lib/raylib.zig"),
@@ -459,9 +478,16 @@ pub fn build(b: *std.Build) !void {
     });
     raygui_test.root_module.addImport("raylib-zig", raylib);
 
+    const rlgl_test = b.addTest(.{
+        .root_source_file = b.path("lib/rlgl.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+
     const test_step = b.step("test", "Check for library compilation errors");
     test_step.dependOn(&raylib_test.step);
     test_step.dependOn(&raygui_test.step);
+    test_step.dependOn(&rlgl_test.step);
 
     const examples_step = b.step("examples", "Builds all the examples");
 
@@ -470,6 +496,7 @@ pub fn build(b: *std.Build) !void {
             const exe_lib = emcc.compileForEmscripten(b, ex.name, ex.path, target, optimize);
             exe_lib.root_module.addImport("raylib", raylib);
             exe_lib.root_module.addImport("raygui", raygui);
+            exe_lib.root_module.addImport("rlgl", rlgl_module);
             const raylib_lib = getRaylib(b, target, optimize, options);
 
             // Note that raylib itself isn't actually added to the exe_lib
@@ -495,6 +522,7 @@ pub fn build(b: *std.Build) !void {
             this.link(b, exe, target, optimize, options);
             exe.root_module.addImport("raylib", raylib);
             exe.root_module.addImport("raygui", raygui);
+            exe.root_module.addImport("rlgl", rlgl_module);
 
             const run_cmd = b.addRunArtifact(exe);
             const run_step = b.step(ex.name, ex.desc);
