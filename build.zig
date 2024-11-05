@@ -315,7 +315,11 @@ pub fn build(b: *std.Build) !void {
         // @todo: models_first_person_maze
         // @todo: models_geometry_shapes
         // @todo: models_gpu_skinning
-        // @todo: models_heightmap
+        .{
+            .name = "models_heightmap",
+            .path = "examples/models/models_heightmap.zig",
+            .desc = "Heightmap loading and drawing",
+        },
         // @todo: models_loading
         // @todo: models_loading_gltf
         // @todo: models_loading_m3d
